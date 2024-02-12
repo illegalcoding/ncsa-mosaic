@@ -641,7 +641,8 @@ int *w, *h;
 XColor *colrs;
 int *bg;
 {
-    unsigned char *bit_data;
+	fprintf(stderr,"ReadBitmap called with datafile: %s, w: %d, h: %d, colrs, bg: %d\n", datafile, *w, *h, *bg);
+	unsigned char *bit_data;
     FILE *fp;
 
     *bg = -1;
@@ -658,7 +659,7 @@ int *bg;
 
     if (fp != NULL)
 	{
-
+		fprintf(stderr,"doing ReadGIF(fp: %p, w: %d, h: %d, colrs, bg: %d)\n",fp,*w,*h,*bg);
 	    bit_data = ReadGIF(fp, w, h, colrs, bg);
 	    if (bit_data != NULL)
 		{
@@ -667,6 +668,7 @@ int *bg;
 		}
 	    rewind(fp);
 
+		fprintf(stderr,"doing ReadXbmBitmap(fp: %p, w: %d, h: %d, colrs)\n",fp,*w,*h);
 	    bit_data = ReadXbmBitmap(fp, datafile, w, h, colrs);
 	    if (bit_data != NULL)
 		{
@@ -675,6 +677,7 @@ int *bg;
 		}
 	    rewind(fp);
 
+		fprintf(stderr,"doing ReadXbm3Bitmap(fp: %p, w: %d, h: %d, colrs, bg: %d)\n",fp,*w,*h,*bg);
 	    bit_data = ReadXpm3Pixmap(fp, datafile, w, h, colrs, bg);
 	    if (bit_data != NULL)
 		{
@@ -687,6 +690,7 @@ int *bg;
 /* I can't believe Mosaic works this way... - DXP */
 /* I have to put this BEFORE ReadJPEG, because that code
    screws up the file pointer by closing it if there is an error - go fig. */
+		fprintf(stderr,"doing ReadPNG(fp: %p, w: %d, h: %d, colrs)\n",fp,*w,*h);
 	    bit_data = ReadPNG(fp, w, h, colrs);
 	    if (bit_data != NULL) /* ie. it was able to read the image */
 		{
@@ -696,6 +700,7 @@ int *bg;
 	    rewind(fp);
 #endif
 #ifdef HAVE_JPEG
+		fprintf(stderr,"doing ReadJPEG(fp: %p, w: %d, h: %d, colrs)\n",fp,*w,*h);
 	    bit_data = ReadJPEG(fp, w, h, colrs);
 	    if (bit_data != NULL)
 		{
@@ -705,7 +710,10 @@ int *bg;
 #endif
 
 	}
-    if ((fp != NULL) && (fp != stdin)) fclose(fp);
+	int fd_open = 1;
+	fd_open = fcntl(fileno(fp), F_GETFD);
+    if(!fd_open)
+		if ((fp != NULL) && (fp != stdin)) fclose(fp);
     return((unsigned char *)NULL);
 }
 
