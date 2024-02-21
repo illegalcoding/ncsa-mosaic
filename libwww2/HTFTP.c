@@ -1779,7 +1779,7 @@ tryAgain:
         if (status == 2 || (status == 5 && !strcmp(filename,"/")))
 		{
 		/* Successed : let's NLST it */
-		fprintf(stderr,"Use NLST\n");
+		/* Horrific hack */
 		goto doLIST;
 		isDirectory = YES;
 		usingNLST=1;
@@ -1804,7 +1804,6 @@ tryAgain:
 		if (status==5) { /*unrecognized command or failed*/
 			isDirectory = YES;
 			usingNLST=2;
-			fprintf(stderr,"Use NLST (2)\n");
 			sprintf(command, "NLST%c%c", CR, LF);
 			status = response (command);
 			if (status == HT_INTERRUPTED) {
@@ -1828,7 +1827,6 @@ tryAgain:
 doLIST:
 			isDirectory = YES;
 			usingNLST=0;
-			fprintf(stderr,"Use LIST\n");
 			sprintf(command, "LIST%c%c", CR, LF);
 			status = response (command);
 			if (status == HT_INTERRUPTED) {
