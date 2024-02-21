@@ -1,0 +1,58 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-DMOTIF1_2",
+      "-DLINUX",
+      "-DPRERELEASE",
+      "-Wall",
+      "-Wno-parentheses",
+      "-Wno-switch",
+      "-Wno-switch-enum",
+      "-Wno-char-subscripts",
+      "-Wno-unused-result",
+      "-I/usr/X11R6/include",
+      "-DHAVE_JPEG",
+      "-DHAVE_PNG",
+      "-I..",
+      "-I../libXmx",
+      "-I../libwww2",
+      "-c",
+      "-o",
+      "main.o",
+      "main.c"
+    ],
+    "directory": "/home/illegalcoding/src/ncsa-mosaic/src",
+    "file": "/home/illegalcoding/src/ncsa-mosaic/src/main.c",
+    "output": "/home/illegalcoding/src/ncsa-mosaic/src/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-DMOTIF1_2",
+      "-DLINUX",
+      "-DPRERELEASE",
+      "-Wall",
+      "-Wno-parentheses",
+      "-Wno-switch",
+      "-Wno-switch-enum",
+      "-Wno-char-subscripts",
+      "-Wno-unused-result",
+      "-I/usr/X11R6/include",
+      "-DHAVE_JPEG",
+      "-DHAVE_PNG",
+      "-I..",
+      "-I../libXmx",
+      "-I../libwww2",
+      "-c",
+      "-o",
+      "kcms.o",
+      "kcms.c"
+    ],
+    "directory": "/home/illegalcoding/src/ncsa-mosaic/src",
+    "file": "/home/illegalcoding/src/ncsa-mosaic/src/kcms.c",
+    "output": "/home/illegalcoding/src/ncsa-mosaic/src/kcms.o"
+  }
+]

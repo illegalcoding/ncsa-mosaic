@@ -54,8 +54,8 @@
 #include "../config.h"
 #ifndef VMS
 #include <sys/time.h>
-struct timeval Tv;
-struct timezone Tz;
+struct timeval _Tv;
+struct timezone _Tz;
 #else
 #include <time.h>
 #endif
@@ -4909,8 +4909,8 @@ FormatAll(hw, Fwidth)
 #ifndef DISABLE_TRACE
 	if (htmlwTrace) {
 #ifndef VMS
-		gettimeofday(&Tv, &Tz);
-		fprintf(stderr, "FormatAll enter (%d.%d)\n", Tv.tv_sec, Tv.tv_usec);
+		gettimeofday(&_Tv, &_Tz);
+		fprintf(stderr, "FormatAll enter (%d.%d)\n", _Tv.tv_sec, _Tv.tv_usec);
 #else
                 fprintf(stderr, "FormatAll enter (%s)\n", asctime(localtime(&clock)));
 #endif
@@ -5125,8 +5125,8 @@ FormatAll(hw, Fwidth)
 #ifndef DISABLE_TRACE
 	if (htmlwTrace) {
 #ifndef VMS
-		gettimeofday(&Tv, &Tz);
-		fprintf(stderr, "FormatAll exit (%d.%d)\n", Tv.tv_sec, Tv.tv_usec);
+		gettimeofday(&_Tv, &_Tz);
+		fprintf(stderr, "FormatAll exit (%d.%d)\n", _Tv.tv_sec, _Tv.tv_usec);
 #else
                 fprintf(stderr, "FormatAll exit (%s)\n", asctime(localtime(&clock)));
 #endif

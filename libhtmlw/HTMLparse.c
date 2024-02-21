@@ -54,8 +54,8 @@
 #include "../config.h"
 #ifndef VMS
 #include <sys/time.h>
-struct timeval Tv;
-struct timezone Tz;
+struct timeval __Tv;
+struct timezone __Tz;
 #else
 #include <time.h>
 #endif
@@ -945,8 +945,8 @@ HTMLParse(old_list, str, hw)
 #ifndef DISABLE_TRACE
 	if (htmlwTrace) {
 #ifndef VMS
-		gettimeofday(&Tv, &Tz);
-		fprintf(stderr, "HTMLParse enter (%d.%d)\n", Tv.tv_sec, Tv.tv_usec);
+		gettimeofday(&__Tv, &__Tz);
+		fprintf(stderr, "HTMLParse enter (%d.%d)\n", __Tv.tv_sec, __Tv.tv_usec);
 #else
                 fprintf(stderr, "HTMLParse enter (%s)\n", asctime(localtime(&clock)));
 #endif
@@ -1176,8 +1176,8 @@ HTMLParse(old_list, str, hw)
 #ifndef DISABLE_TRACE
 	if (htmlwTrace) {
 #ifndef VMS
-		gettimeofday(&Tv, &Tz);
-		fprintf(stderr, "HTMLParse exit (%d.%d)\n", Tv.tv_sec, Tv.tv_usec);
+		gettimeofday(&__Tv, &__Tz);
+		fprintf(stderr, "HTMLParse exit (%d.%d)\n", __Tv.tv_sec, __Tv.tv_usec);
 #else
                 fprintf(stderr, "HTMLParse exit (%s)\n", asctime(localtime(&clock)));
 #endif

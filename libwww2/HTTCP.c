@@ -18,6 +18,7 @@
 #include "HTAlert.h"
 #include "HTAccess.h"
 #include "tcp.h"		/* Defines SHORT_NAMES if necessary */
+#include <bits/time.h>
 #ifdef SHORT_NAMES
 #define HTInetStatus		HTInStat
 #define HTInetString 		HTInStri
@@ -27,6 +28,7 @@
 #ifdef __STDC__
 #include <stdlib.h>
 #endif
+#include <time.h>
 
 #if defined(SVR4) && !defined(SCO) && !defined(linux) && !defined(DGUX)
 #include <sys/filio.h>
@@ -563,6 +565,8 @@ PUBLIC int HTDoConnect (char *url, char *protocol, int default_port, int *s)
 /* This is so interruptible reads can be implemented cleanly. */
 int HTDoRead (int fildes, void *buf, unsigned nbyte)
 {
+	struct timespec ts_start;
+	clock_gettime(CLOCK_REALTIME,&ts_start);
   int ready, ret, intr;
   fd_set readfds;
   struct timeval timeout;
@@ -601,8 +605,24 @@ int HTDoRead (int fildes, void *buf, unsigned nbyte)
                   }
           }
     }
-
+  int count;
+  ioctl(fildes,FIONREAD,&count);
+  fprintf(stderr,"Bytes on socket: %d\n",count);
   ret = read (fildes, buf, nbyte);
+  fprintf(stderr,"read returned %d, errno: %d, %s\n",ret,errno,strerror(errno));
+  int TimedOut = 0;
+  while((ret == 0 && errno == EAGAIN) && TimedOut != 1) {
+	  ret = read(fildes,buf,nbyte);
+	  struct timespec Current;
+ 	  clock_gettime(CLOCK_REALTIME, &Current);
+	  double Seconds = (Current.tv_sec - ts_start.tv_sec) + (Current.tv_nsec - ts_start.tv_nsec) / 1e9;
+	  /* fprintf(stderr,"Seconds: %f\n",Seconds); */
+
+	  if(Seconds > 5) {
+		TimedOut = 1;
+	  } 
+  }
+	  fprintf(stderr,"after loop: read returned %d, errno: %d, %s\n",ret,errno,strerror(errno));
 
 #ifndef DISABLE_TRACE
   if (httpTrace) {

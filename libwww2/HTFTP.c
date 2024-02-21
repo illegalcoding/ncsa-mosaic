@@ -1777,8 +1777,10 @@ tryAgain:
 	/*if status is 5 and we are at the root, assume we are on a vms
 		machine and try to print out a directory*/
         if (status == 2 || (status == 5 && !strcmp(filename,"/")))
-          {
+		{
 		/* Successed : let's NLST it */
+		fprintf(stderr,"Use NLST\n");
+		goto doLIST;
 		isDirectory = YES;
 		usingNLST=1;
 		sprintf(command, "NLST %s %c%c", NLST_PARAMS, CR, LF);
@@ -1802,6 +1804,7 @@ tryAgain:
 		if (status==5) { /*unrecognized command or failed*/
 			isDirectory = YES;
 			usingNLST=2;
+			fprintf(stderr,"Use NLST (2)\n");
 			sprintf(command, "NLST%c%c", CR, LF);
 			status = response (command);
 			if (status == HT_INTERRUPTED) {
@@ -1822,8 +1825,10 @@ tryAgain:
 		}
 
 		if (status==5) { /*unrecognized command or failed*/
+doLIST:
 			isDirectory = YES;
 			usingNLST=0;
+			fprintf(stderr,"Use LIST\n");
 			sprintf(command, "LIST%c%c", CR, LF);
 			status = response (command);
 			if (status == HT_INTERRUPTED) {
