@@ -4487,15 +4487,15 @@ splash_goto:
     sendAgent=get_pref_boolean(eSEND_AGENT);
 
 #ifndef DISABLE_TRACE
-    /* httpTrace=get_pref_boolean(eHTTPTRACE); */
-    /* www2Trace=get_pref_boolean(eWWW2TRACE); */
+    httpTrace=get_pref_boolean(eHTTPTRACE);
+    www2Trace=get_pref_boolean(eWWW2TRACE);
     htmlwTrace=get_pref_boolean(eHTMLWTRACE);
     cciTrace=get_pref_boolean(eCCITRACE);
     srcTrace=get_pref_boolean(eSRCTRACE);
     cacheTrace=get_pref_boolean(eCACHETRACE);
     nutTrace=get_pref_boolean(eNUTTRACE);
-    httpTrace=1;
-    www2Trace=1;
+    /* httpTrace=1; */
+    /* www2Trace=1; */
     /* htmlwTrace=1; */
     /* cciTrace=1; */
     /* srcTrace=1; */

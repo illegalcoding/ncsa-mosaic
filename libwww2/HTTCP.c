@@ -607,9 +607,9 @@ int HTDoRead (int fildes, void *buf, unsigned nbyte)
     }
   int count;
   ioctl(fildes,FIONREAD,&count);
-  fprintf(stderr,"Bytes on socket: %d\n",count);
+  /* fprintf(stderr,"Bytes on socket: %d\n",count); */
   ret = read (fildes, buf, nbyte);
-  fprintf(stderr,"read returned %d, errno: %d, %s\n",ret,errno,strerror(errno));
+  /* fprintf(stderr,"read returned %d, errno: %d, %s\n",ret,errno,strerror(errno)); */
   int TimedOut = 0;
   while((ret == 0 && errno == EAGAIN) && TimedOut != 1) {
 	  ret = read(fildes,buf,nbyte);
@@ -622,7 +622,7 @@ int HTDoRead (int fildes, void *buf, unsigned nbyte)
 		TimedOut = 1;
 	  } 
   }
-	  fprintf(stderr,"after loop: read returned %d, errno: %d, %s\n",ret,errno,strerror(errno));
+	  /* fprintf(stderr,"after loop: read returned %d, errno: %d, %s\n",ret,errno,strerror(errno)); */
 
 #ifndef DISABLE_TRACE
   if (httpTrace) {
